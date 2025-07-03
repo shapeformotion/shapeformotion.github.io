@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Shape-for-Motion: Precise and Consistent Video Editing with 3D Proxy">
+  <meta name="keywords" content="Video Editing, 3D Proxy, Generative Rendering">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shape-for-Motion: Precise and Consistent Video Editing with 3D Proxy</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/app.css">
+  <link rel="icon" href="static/images/icon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script src="static/js/video_comparison.js"></script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  <style>
+    .shapeformotion-text {
+      background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5em;
+      font-size: 1.8em;
+    }
+    .subtitle-text {
+      font-size: 0.8em;
+      display: block;
+    }
+    
+    /* 只给标题section添加背景色 */
+    .title-section {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+      padding: 2em 0;
+    }
+    
+    /* 修改视频控制条样式为完全透明 */
+    video::-webkit-media-controls-panel {
+      background-color: rgba(0, 0, 0, 0);  /* 将透明度改为0 */
+      padding: 0 10px;
+    }
+    
+    video::-webkit-media-controls-progress-bar {
+      background-color: #4ECDC4;
+    }
+    
+    video::-webkit-media-controls-current-time-display,
+    video::-webkit-media-controls-time-remaining-display {
+      color: white;
+    }
+    
+    /* 表格样式 */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1em 0;
+      font-size: 0.9em;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+      padding: 8px 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    
+    .comparison-table th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+    
+    .comparison-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .comparison-table .shapeformotion-row {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    
+    .comparison-table .highlight {
+      text-decoration: underline;
+    }
+    
+    .comparison-table .best {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    
+    .comparison-table caption {
+      caption-side: top;
+      text-align: center;
+      margin-bottom: 1em;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero title-section">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              <span class="shapeformotion-text">Shape-for-Motion</span>
+              <span class="subtitle-text">Precise and Consistent Video Editing with 3D Proxy</span>
+            </h1>
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                  <a href="https://arxiv.org/abs/2506.22432" class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/yuhaoliu7456/Shape-for-Motion" class="external-link button is-normal is-rounded is-dark">
+                    <!--  style="background-color: #808080;" -->
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Demo Link. -->
+                  <!-- <span class="link-block">
+                  <a href="#"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-desktop"></i>
+                    </span>
+                    <span>Demo</span>
+                  </a>
+                </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="hero teaser teaser-video">
+  <div class="container is-max-desktop has-text-centered">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline width="100%" controls>
+        <source src="video/demo.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+        We introduce a 3D-aware framework, <b>Shape-for-Motion</b>, to support precise and consistent video editing by reconstructing an editable 3D mesh to serve as control signals for video generation.
+      </h2>
+      <img src="teaser.jpg" class="interpolation-image" style="width: 100%;" />
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Framework</h2>
+        <div class="content has-text-justified">
+          <p>
+            We propose <b>Shape-for-Motion</b>, a novel video editing framework that incorporates a 3D proxy to 
+            allow diverse and precise video object manipulation while ensuring temporal consistency across frames.
+          </p>
+          
+          <ul>
+            <li>We propose a <b>video object reconstruction</b> method, which produces meshes with correspondences across frames, 
+                and a dual propagation strategy. Together, these components enable a <b>user-friendly</b> editing process: 
+                users can perform edits directly on the canonical 3D mesh only <b>once</b>, 
+                with the edits are <b>automatically propagated</b> to subsequent frames.</li>
+            <li>We propose a <b>self-supervised mixed training strategy</b> to train a decoupled video diffusion model that leverages geometry and texture information from the edited 3D proxy as control signals, achieving more consistent editing results.</li>
+          </ul>
+          
+          <h3 class="title is-4 has-text-centered">Model Overview</h3>
+          <div class="content has-text-justified has-text-centered">
+            <div class="has-text-centered">
+              <img src="figs/pipeline1.png" style="width: 100%; padding-bottom: 1em;">
+            </div>
+            <!-- <p>
+              Our Shape-for-Motion framework consists of three main stages: (1) Consistent 3D Proxy Reconstruction that generates time-consistent meshes from input videos, (2) Editing 3D Proxy with Automatic Propagation that enables user-friendly editing through dual-propagation strategy, and (3) Generative Rendering from the 3D Proxy that produces high-quality edited videos using a decoupled video diffusion model.
+            </p> -->
+            <p>
+              <!-- Our Shape-for-Motion framework consists of three main stages: (1) Consistent 3D Proxy Reconstruction that generates time-consistent meshes from input videos, (2) Editing 3D Proxy with Automatic Propagation that enables user-friendly editing through dual-propagation strategy, and (3) Generative Rendering from the 3D Proxy that produces high-quality edited videos using a decoupled video diffusion model. -->
+              Overview of Shape-for-Motion. Our approach is an interactive video editing framework that utilizes an editable 3D proxy (e.g., mesh) to enable users to perform precise and consistent video editing. Given an input video, our approach first converts the target object into a <b>3D mesh</b> with frame-by-frame correspondences. Users can then perform editing on this 3D proxy <b>once</b> only (<i>i.e.</i>, on a single frame), and the edits will be <b>automatically propagated</b> to the 3D meshes of all other frames. The edited 3D meshes are then converted back to 2D geometry and texture maps, which are used as control signals in a <b>decoupled video diffusion model</b> to generate the final edited result. 
+              <!-- Note that, for better visualization, the colors of the propagated meshes are disabled in Step-II. -->
+            </p>
+          </div>
+          
+          
+          <div class="content has-text-justified has-text-centered" style="width: 90%; margin: 0 auto;">
+            <h3 class="title is-4 has-text-centered" style="padding-top: 1em;">Consistent 3D Proxy Reconstruction</h3>
+            <div class="has-text-centered">
+              <img src="figs/pipeline2.png" style="width: 80%; padding-bottom: 1em;">
+            </div>
+            <p>
+              Pipeline of our consistent object reconstruction. We use deformable-3DGS to reconstruct the 3D mesh of the target object in a video by maintaining canonical Gaussians and a time-varying deformation field.
+            </p>
+          </div>
+          
+          <div class="content has-text-justified has-text-centered" style="width: 90%; margin: 0 auto;">
+            <h3 class="title is-4 has-text-centered" style="padding-top: 2em;">Editing 3D Proxy with Automatic Propagation</h3>
+            <div class="has-text-centered">
+              <img src="figs/pipeline3.png" style="width: 65%; padding-bottom: 1em;">
+            </div>
+            <p>
+              Workflow of our consistent editing propagation. <span style="color: orange;">Solid orange arrows</span> denote texture propagation from the canonical mesh, and <span style="color: blue;">solid blue arrows</span> indicate geometry propagation from canonical Gaussians.
+            </p>
+          </div>
+          
+          <!-- <h3 class="title is-4 has-text-centered">Generative Rendering from the 3D Proxy</h3> -->
+          <div class="content has-text-justified has-text-centered" style="width: 90%; margin: 0 auto;">
+            <h3 class="title is-4 has-text-centered" style="padding-top: 2em;">Generative Rendering from the 3D Proxy</h3>
+            <div class="has-text-centered">
+              <img src="figs/pipeline4.png" style="width: 80%; padding-bottom: 1em;">
+            </div>
+            <p>
+              <b>Training pipeline</b> of the generative rendering from the 3D proxy. Using rendered geometry (<i>i.e.</i>, normal map) and texture as separate control signals, we adopt a <b>self-supervised mixed training strategy</b> in which the geometry controller and the texture enhancer (<i>i.e.</i>, denoising U-Net) are <b>alternately</b> trained in two stages. 
+            </p>
+            <p>
+              The contents enclosed by the <span style="color: purple;">purple dashed box</span> indicates inputs shared by both stages, while those in the <span style="color: orange;">orange</span> and <span style="color: blue;">blue dashed boxes</span> are specific to the first and second stages, respectively. 
+              <!-- Reference objects and coarse textures are constructed via the reference and texture simulators to facilitate self-supervised training. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Applications</h2>
+        <div class="content has-text-justified">
+          <p>
+            We demonstrate the effectiveness of our Shape-for-Motion framework in various applications.
+          </p>
+          <!-- application 1: Image-to-Video Animation -->
+          <h3 class="title is-4 has-text-centered">Image-to-Video Animation</h3>
+          <!-- video -->
+          <video id="teaser" autoplay muted loop playsinline width="100%" controls>
+            <source src="video/demo_application1.mp4" type="video/mp4">
+          </video>
+          <!-- application 2: Appearance Editing -->
+          <h3 class="title is-4 has-text-centered">Appearance Editing</h3>
+          <!-- video -->
+          <video id="teaser" autoplay muted loop playsinline width="100%" controls>
+            <source src="video/demo_application2.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">More Visual Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            Below we showcase additional qualitative results demonstrating the effectiveness of our Shape-for-Motion framework across different scenarios and editing operations, including both short and long video sequences.
+          </p>
+          <video id="teaser" autoplay muted loop playsinline width="100%" controls>
+            <source src="video/demo_more1.mp4" type="video/mp4">
+          </video>
+          
+          <video id="teaser" autoplay muted loop playsinline width="100%" controls>
+            <source src="video/demo_more2.mp4" type="video/mp4">
+          </video>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+<pre><code>@article{liu2025shape,
+    title={Shape-for-Motion: Precise and Consistent Video Editing with 3D Proxy},
+    author={Liu, Yuhao and Wang, Tengfei and Liu, Fang and Wang, Zhenwei and Lau, Rynson W.H.},
+    journal={arXiv preprint arXiv:2506.22432},
+    year={2025}
+}</code></pre>
+  </div>
+</section>
+
+  <div class="columns is-centered">
+    <div class="column is-8">
+      <div class="content">
+        <p> Website borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
+            International</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+
